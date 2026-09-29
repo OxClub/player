@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.example.oxplayer"
-    compileSdk = 34
+    compileSdk = 36 // Android 16
 
     defaultConfig {
         applicationId = "com.example.oxplayer"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 36 // Android 16
         versionCode = 1
         versionName = "1.0"
     }

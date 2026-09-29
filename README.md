@@ -46,6 +46,27 @@ Agar aap OxFiles ka wahi keystore reuse karna chahte ho, to wahi secret values y
 
 **Note:** Is repo mein `gradlew` wrapper script/jar nahi hai (offline environment mein generate nahi ho saka). Workflows isliye seedha `gradle` command use karte hain Gradle ke official setup action ke through — kaam karega bina wrapper ke bhi. Jab aap Android Studio mein project khologe, wo khud wrapper generate/fix kar dega local development ke liye.
 
+## Android 16 (API 36) support
+- `compileSdk`/`targetSdk` ab **36** hain, aur usske liye AGP **8.9.1+** aur
+  Gradle **8.11.1+** use ho raha hai (Google ka apna minimum requirement —
+  CI workflows mein bhi Gradle 8.11.1 pin kiya hua hai).
+- **Zaroori caveat — libVLC ka 16 KB page size issue:** Android 15+ se
+  Google Play ko native libraries (`.so` files) **16 KB memory page size**
+  ke liye aligned chahiye, warna kuch naye devices par app crash ya install
+  fail ho sakta hai. `libvlc-all:3.6.0` (jo hum use kar rahe hain) is fix ke
+  saath release nahi hua tha — VideoLAN team par ye known open issue hai.
+  Build/publish se pehle:
+  1. [Maven Central par libvlc-all ke latest versions check karo](https://central.sonatype.com/artifact/org.videolan.android/libvlc-all) —
+     agar koi naya patch ya stable 4.x release 16 KB-aligned mila to
+     `app/build.gradle.kts` mein version bump kar do.
+  2. Google ka apna script (`check_elf_alignment.sh`, developer.android.com/guide/practices/page-sizes)
+     release APK par chala kar verify karo ki `libvlc.so`/`libvlcjni.so`
+     ALIGNED dikha rahe hain.
+  3. Jab tak fix wala version na mile, app aaj ke zyadatar (4 KB page size
+     wale) devices par bilkul normal chalega — sirf naye 16 KB page size
+     wale devices par risk hai.
+
+## Setup
 1. Android Studio mein naya "Empty Compose Activity" project banao (ya is
    folder ko root leke Gradle wrapper generate karo: `gradle wrapper`).
 2. Is `app/` folder ke andar ke files apne project ke `app/` folder mein
