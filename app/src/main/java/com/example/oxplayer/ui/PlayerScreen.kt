@@ -1,5 +1,7 @@
 package com.example.oxplayer.ui
 
+import kotlinx.coroutines.delay
+import androidx.compose.ui.draw.scale
 import android.app.Activity
 import android.provider.Settings
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
