@@ -186,7 +186,4 @@ private fun adjustBrightness(activity: Activity, delta: Float) {
 
 // Small helper so the AndroidView call above stays readable
 private fun Modifier.graphicsLayerScale(scale: Float): Modifier =
-    this.then(Modifier.scale(scale))
-
-private fun Modifier.scale(scale: Float): Modifier =
-    androidx.compose.ui.draw.scale(scale)
+    this.scale(scale)
